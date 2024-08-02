@@ -1,6 +1,92 @@
+
+{% comment %} VARIABLES {% endcomment %}
+
 <div class="wrapper">
     {% comment %} set a variable {% endcomment %}
-    {%  assign myString = 'Hello world' %}
+    {%  assign my_string = "Hello world" %}
     {% comment %} call variable {% endcomment %}
-    {{ myString }}
+    {{ my_string }}
+
+    {% comment %} capture format {% endcomment %}
+    {%  capture my_string_2 %}
+        This is my second string with mystring
+    {%  endcapture %}
+
+    <p>{{ my_string_2 }}</p>
 </div>
+
+{% comment %} CONDITIONALS {% endcomment %}
+{% assign age = 25 %}
+{% assign string = "hello world" %}
+
+{% if age > 20% and string contains "world"%}
+    you can view the page
+    {% elsif age > 17 %}
+    you can view some stuff
+    {% else %}
+    you are too young
+{% endif %}
+
+{%  unless age > 20 %}
+    You are young
+    {% else %}
+    you are old
+{% endunless %}
+
+{%  case age %}
+    {% when 24 %}
+        <p>you are exactly 24!</p>
+    {% when 21 %}
+        <p>you are exactly 21!</p>
+    {% else %}
+        <p>idk how old you are</p>
+{% endcase %}
+
+{% comment %} LOOPS {% endcomment %}
+
+{% for collection in collections %}
+    <p>{{ collection.title }}</p>
+    {% else %}
+    <p>there's no collections</p>
+{% endfor %}
+
+{% for collection in collections %}
+    {% if collection.title =="Home page" %}
+        {% continue %}
+        {%endif%}
+    {% endfor %}
+
+    {% for collection in collections %}
+        {{forloop.index}}
+        {% else %}
+        <p>there's no collections</p>
+    {% endfor %}
+
+{% liquid 
+    assign age = 33
+    assign sex = "female"
+    assign favorite_fruit = "peaches"
+    assign favorite_veggie = ""
+
+    if favorite_fruit =="peaches"
+        assign likes_oranges = true
+    endif
+%}
+    {%  if favorite_veggie == blank %}
+        you don't have a favorite veggie 
+    {% endif %}
+{{ age }}
+{{ sex }}
+{{ favorite_fruit }}
+{{ likes_oranges }}
+
+
+{% comment %} FILTERS {% endcomment %}
+ {% assign channel = "are you listening?" %}
+ <h2>{{ channel | upcase | append: 'yes'}}</h2>
+
+ {% comment %} upcase : makes everything all caps
+                append : add on
+
+                having upcase before append makes only the items before upcase capitalize 
+   {% endcomment %}
