@@ -1,0 +1,51 @@
+{% comment %} ASSETS FOLDER
+    - images
+    - scripts
+    - stylesheets
+{% endcomment %}
+
+{{ images['potions-header.png'] | image_url: width: 300 | image_tag }}
+
+
+{% comment %} files 
+        - stored within shopify dashboard 
+        
+{% endcomment %}
+
+{{images ['logo.png'] | file_img_url: width: 20 }} 
+
+{% comment %} 
+ 
+connecting a css file
+ 
+{% endcomment %}
+
+{{ 'style.css' | stylesheet_tag }}
+
+{% comment %} 
+ 
+connecting a script file
+ 
+{% endcomment %}
+
+{{ 'cart.js' | asset_url | preload_tag: as: 'script' }}
+
+{% comment %} 
+
+connecting a specific liquid file from snippets 
+    - just the name of the file
+    - this file name is "hello.liquid"
+
+{% endcomment %}
+
+{% render 'hello' %}
+
+{% comment %} 
+
+connecting a specific liquid file from sections 
+    - just the name of the file
+    - this file name is "hello.liquid"
+
+{% endcomment %}
+
+{%  section 'header' %}

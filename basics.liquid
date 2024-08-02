@@ -83,10 +83,15 @@
 
 {% comment %} FILTERS {% endcomment %}
  {% assign channel = "are you listening?" %}
- <h2>{{ channel | upcase | append: 'yes'}}</h2>
+ <h2>{{ channel | upcase | append: 'yes' | replace: "are you", "is gideon"}}</h2>
+ {%  assign price = 999 %}
+
+ <h2>{{ channel }}</h2>
+ <p>{{ price | money }}</p>
 
  {% comment %} upcase : makes everything all caps
                 append : add on
 
                 having upcase before append makes only the items before upcase capitalize 
    {% endcomment %}
+

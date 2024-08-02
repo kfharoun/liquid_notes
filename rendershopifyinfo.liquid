@@ -1,0 +1,27 @@
+{% comment %} 
+go to shopify objects documentation page 
+https://shopify.dev/docs/api/liquid/objects/
+
+{% endcomment %}
+
+{%  for collection in collections %}
+<h2>{{ collection.title }}</h2>
+{%  unless collection.description == blank %}
+<p>{{ collection.description }}</p>
+    {% endunless %}
+
+    {%  for product in collection.products %}
+        {% if product.featured_image %}
+        {{ product | image_url: width: 450 }}
+        {% endif %}
+            <h3>{{ product.title }}</h3>
+            <p>{{  product.price | money }}</p>
+        <ul>
+        {% for tag in product.tags %}
+            <li>{{ tag }}</li>
+        {% endfor %}
+        </ul>
+        {% else %}
+        <p>no products in {{ collection.title }}</p>
+    {% endfor %}
+{% endfor %}
