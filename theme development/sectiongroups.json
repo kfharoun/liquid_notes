@@ -1,0 +1,49 @@
+
+// allow you to choose an area where your section can be rendered  
+
+// there are 3 that come pre-installed 
+//     -header
+//     -template
+//     -footer
+
+// 1. create a new file in sections folder (.json)
+
+
+{
+    "name": "Special section", 
+    "type": "custom.special", 
+    "sections": {
+        // allows them to add the section in
+        "main": {
+            "type": "custom-section", 
+            "settings":{
+                "text": "Hard rendered"
+            }
+
+        }
+    }, 
+    "order": ["main"]
+}
+
+// you have to render this within the theme file (theme.liquid ) inside of layout
+
+// underneath 'header-group'
+
+// https://shopify.dev/docs/storefronts/themes/architecture/section-groups/migrate
+
+{% sections 'special-section'%}
+
+// to hard render a section instead of adding sections / removing presets 
+
+{% sections 'custom-section'%}
+
+// delete presets to make it so the user cannot delete a custom section from their theme
+
+// add this to schema with default 
+
+"default":{
+    "settings":{
+        "text": "heeeeey"
+    }
+}
+

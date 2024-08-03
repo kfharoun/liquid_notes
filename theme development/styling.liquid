@@ -8,6 +8,8 @@ stylesheet tag (take the styles within it and add it to the head)
 
 this would go above schema and beneath html
 
+you can do the same formatting for js 
+
 {% endcomment %}
 
 {% stylesheet %}
@@ -16,6 +18,17 @@ this would go above schema and beneath html
     padding: 60px 0;
 }
 {% endstylesheet %}
+
+{% javascript %}
+alert('hey')
+{% endjavascript %}
+
+{% comment %} if you want to access a section with js {% endcomment %}
+
+<script>
+    const a = document.querySelector('#shopify-section-{{ section.id }}')
+    console.log(a)
+</script>
 
 {% comment %} 
 
@@ -35,7 +48,7 @@ to get around that you need to inline them in html
     {% endif %}
 {% endfor %}
 
-<h1> {{ section.settings.text }}</h1>
+<h1 style="color: {{ section.settings.color }}"> {{ section.settings.text }}</h1>
 
 {%  for block in section.blocks %}
     {%  if block.type == 'social' %}
