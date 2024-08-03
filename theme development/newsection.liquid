@@ -1,0 +1,147 @@
+{% comment %} 
+CREATING A NEW SECTION FILE
+    - go into section folder 
+    - custom-section.liquid
+    - ever section needs a schema
+        - schema defines our properties
+
+a section allows you to create an element inside of your shopify theme
+
+name: names your section (what it'll say when adding a new section on shopify theme editor)
+tag: can change from div to: 
+    - article
+    - aside
+    - div
+    - footer
+    - header
+    - section
+class: add a class name
+limit: limits how many times it can go on a page
+    - only have 1 or 2
+settings: allows user customization when clicking on the section 
+    - https://shopify.dev/docs/storefronts/themes/architecture/settings/input-settings
+blocks: section within a section 
+    - repeatable content within your section 
+appblocks: allow other sites to inject code into your section
+max_blocks: gives a limit ot how many blocks can BE ADDED TO SECTION   
+presets: allows us to define default settings for our section multiple times
+locales: language options
+enabled_on: where sections can be rendered in store
+disabled_on: ""
+https://shopify.dev/docs/storefronts/themes/architecture/sections
+
+{% endcomment %}
+{% comment %} t means translate {% endcomment %}
+<p> {{ 'text' | t }}</p>
+<h1> {{ section.settings.text }}</h1>
+{% comment %} <h1>{{ <section class="settings text"></section> }}</h1> {% endcomment %}
+
+{%  for block in section.blocks %}
+    {%  if block.type == 'social' %}
+    <a href="{{ block.settings.url }}">{{ block.settings }}</a>
+    {% elsif block.type == 'paragraph' %}
+    <p>{{ block.settings.text }}</p>
+    {% endif %}
+{% endfor %}
+
+{% comment %} if you want blocks to surround section {% endcomment %}
+
+{%  for block in section.blocks %}
+    {% if block.type == 'paragraph' %}
+    <p>{{ block.settings.text }}</p>
+    {% elsif block.type == '@app' %}
+        {% render block %}
+    {% endif %}
+{% endfor %}
+
+<h1> {{ section.settings.text }}</h1>
+
+{%  for block in section.blocks %}
+    {%  if block.type == 'social' %}
+    <a href="{{ block.settings.url }}">{{ block.settings }}</a>
+    {% endif %}
+{% endfor %}
+
+{% schema %}
+{
+    "name": "Custom Section", 
+    "settings:": [
+        {
+        "type": "text",
+        "id": "text",
+        "label": "Text"
+        }
+    ], 
+    "presets": [
+        {
+            "name": "Default custom section",
+            "settings": {
+            "text": "default text"
+            },
+            "blocks": [
+                {
+            "type": "paragraph"
+                }, 
+                {
+                "type": "social", 
+                "settings": {
+                "url": "https://twitter.com"}, 
+                "text": "Twitter"
+                }
+        ]
+        }, 
+        {"name": "Red custom section" ,
+        "settings": {
+            "text": "red text"
+            }
+        },
+    ], 
+    "tag": "header", 
+    "class": "custom-section",
+    "limit": 1,
+    "blocks": [
+        {
+        "type": "@app"
+        },
+        {
+            "name": "Social Link", 
+            "type": "social", 
+            "settings": [
+                {
+                "type": "text", 
+                "id" : "text", 
+                "label": "Text"
+            }, 
+            {
+                "type": "url", 
+                "id" : "url", 
+                "label": "URL"
+            }, 
+            ]
+        }, 
+        [
+            {
+                "name": "Paragraph", 
+                "type": "paragraph", 
+                "settings": [
+                    {
+                    "type": "textarea", 
+                    "id" : "text", 
+                    "label": "Text"
+                }
+                ]
+            }
+        ]
+    ], 
+    "max_blocks": 3,
+    "locales": {
+        "en": {
+        "text": "Hello"
+        }, 
+        "es": {
+        "text": "Hola"
+        }
+    }
+    
+}
+{% endschema %}
