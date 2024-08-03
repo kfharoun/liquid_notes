@@ -1,50 +1,31 @@
 {% comment %} 
-CREATING A NEW SECTION FILE
-    - go into section folder 
-    - custom-section.liquid
-    - ever section needs a schema
-        - schema defines our properties
 
-a section allows you to create an element inside of your shopify theme
+theme stylesheet gets added globally
 
-name: names your section (what it'll say when adding a new section on shopify theme editor)
-tag: can change from div to: 
-    - article
-    - aside
-    - div
-    - footer
-    - header
-    - section
-class: add a class name
-limit: limits how many times it can go on a page
-    - only have 1 or 2
-settings: allows user customization when clicking on the section 
-    - https://shopify.dev/docs/storefronts/themes/architecture/settings/input-settings
-blocks: section within a section 
-    - repeatable content within your section 
-appblocks: allow other sites to inject code into your section
-max_blocks: gives a limit ot how many blocks can BE ADDED TO SECTION   
-presets: allows us to define default settings for our section multiple times
-locales: language options
-enabled_on: where sections can be rendered in store
-disabled_on: ""
-https://shopify.dev/docs/storefronts/themes/architecture/sections
+inline styles in html
+
+stylesheet tag (take the styles within it and add it to the head)
+
+this would go above schema and beneath html
 
 {% endcomment %}
-{% comment %} t means translate {% endcomment %}
-<p> {{ 'text' | t }}</p>
-<h1> {{ section.settings.text }}</h1>
-{% comment %} <h1>{{ <section class="settings text"></section> }}</h1> {% endcomment %}
 
-{%  for block in section.blocks %}
-    {%  if block.type == 'social' %}
-    <a href="{{ block.settings.url }}">{{ block.settings }}</a>
-    {% elsif block.type == 'paragraph' %}
-    <p>{{ block.settings.text }}</p>
-    {% endif %}
-{% endfor %}
+{% stylesheet %}
+.custom-section {
+    background: gray; 
+    padding: 60px 0;
+}
+{% endstylesheet %}
 
-{% comment %} if you want blocks to surround section {% endcomment %}
+{% comment %} 
+
+this would go above schema and beneath html
+
+can't use liquid within the stylesheet tag (cant access any of the settings)
+
+to get around that you need to inline them in html
+
+{% endcomment %}
 
 {%  for block in section.blocks %}
     {% if block.type == 'paragraph' %}
@@ -62,6 +43,13 @@ https://shopify.dev/docs/storefronts/themes/architecture/sections
     {% endif %}
 {% endfor %}
 
+
+{% comment %} 
+ 
+settings for styling (look at settings)
+ 
+{% endcomment %}
+
 {% schema %}
 {
     "name": "Custom Section", 
@@ -70,8 +58,14 @@ https://shopify.dev/docs/storefronts/themes/architecture/sections
         "type": "text",
         "id": "text",
         "label": "Text"
-        }
-    ], 
+        }, 
+        {
+            "type": "color",
+            "id": "color",
+            "label": "Text color", 
+            "default": "#00000"
+            }
+    ],
     "presets": [
         {
             "name": "Default custom section",
